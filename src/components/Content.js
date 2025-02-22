@@ -83,8 +83,8 @@ function Content ({ sendData, isCartOpened }) {
         <div className="flex justify-around p-2">
         {menu.map((category, index) => {
           return (
-            <div className={`w-1/4 flex flex-col items-center gap-2 rounded hover:bg-green-100 pt-2 p-1 cursor-pointer ${currenntCategory === category.category ? 'bg-green-200' : ''}`} onClick={() => handleCurrentCategory(category.category)}> 
-              <img className="rounded-full h-16 w-16" src={require(`../images/${category.img}`)}></img>
+            <div className={`w-1/4 flex flex-col items-center gap-2 rounded hover:bg-green-100 pt-2 p-1 cursor-pointer transition ${currenntCategory === category.category ? 'bg-green-200' : ''}`} onClick={() => handleCurrentCategory(category.category)}> 
+              <img className="rounded-full h-16 w-16 overflow-hidden object-cover" src={require(`../images/${category.img}`)}></img>
               <p className="text-center text-xs">{category.category}</p>
             </div>
           )
