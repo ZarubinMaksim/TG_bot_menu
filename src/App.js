@@ -1,24 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import Content from "./components/Content";
+import Header from "./components/header";
 
 function App() {
+  const [orderData, setOrderData] = useState()
+  const [isCartOpened, setIsCartOpened] = useState(false)
+
+  const handleOrderData = (orderData) => {
+    setOrderData(orderData)
+  }
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="p-2 w-1/2 flex flex-col gap-5">
+      <Header data={orderData} isCartOpened={isCartOpened} setIsCartOpened={setIsCartOpened}/>
+      <Content sendData={handleOrderData} isCartOpened={isCartOpened}/>
     </div>
+
   );
 }
 
