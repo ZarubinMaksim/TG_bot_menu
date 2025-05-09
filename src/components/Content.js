@@ -3,7 +3,7 @@ import menu from '../text/menu'
 import Card from "./Card"
 import Cart from "./Cart"
 
-function Content ({ sendData, isCartOpened }) {
+function Content ({ sendData, isCartOpened, guestDetails }) {
   const [currenntCategory, setCurrentCategory] = useState('')
   const [orderList, setOrderList] = useState(JSON.parse(localStorage.getItem('orderList')) ||[])
 
@@ -20,6 +20,11 @@ function Content ({ sendData, isCartOpened }) {
     sendData(orderList)
   }, [orderList])
 
+  useEffect(() => {
+    if (!currenntCategory && menu.length > 0) {
+      setCurrentCategory(menu[0].category) // Устанавливаем первую категорию
+    }
+  }, [currenntCategory])
 
   const handleCurrentCategory = (category) => {
 
@@ -77,7 +82,7 @@ function Content ({ sendData, isCartOpened }) {
   return (
     <div className="flex flex-col">
       {isCartOpened ? (
-        <Cart data={orderList} addToOrderList={addToOrderList} removeFromOrderList={removeFromOrderList}/>
+        <Cart data={orderList} addToOrderList={addToOrderList} removeFromOrderList={removeFromOrderList} guestDetails={guestDetails}/>
       ) : (
         <>        
         <div className="flex justify-around p-2">
@@ -92,7 +97,7 @@ function Content ({ sendData, isCartOpened }) {
       </div>
 
         {currenntCategory && (
-          <div className="flex flex-wrap justify-around gap-3 mt-5"> 
+          <div className="flex flex-wrap gap-1 mt-5"> 
             {menu.find((category) => category.category === currenntCategory).items.map((item, index) => {
 
               const itemInOrder = orderList.find(orderItem => orderItem.name === item.name)

@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-function Cart ({ data, addToOrderList, removeFromOrderList }) {
+function Cart ({ data, addToOrderList, removeFromOrderList, guestDetails }) {
 const [paymentType, setPaymentType] = useState('')
 
 const handleRemoveItem = (item) => {
@@ -11,8 +11,28 @@ const handleAddItem = (item) => {
   addToOrderList(item)
 } 
 
+const submitCart = async (data) => {
+  const guestDetailsTEMPORARY = {
+    chatId: '317138824',
+    keyRequest: '',
+    lastname: '小马',
+    name: '马克西姆',
+    room: 'B606',
+    arrival: '05-05-2025',
+    departure: '08-05-2025'
+  }
+  try {
+    await fetch ('http://38.244.150.204:3000/send-order', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ guestDetailsTEMPORARY, data })
+    })
+  } catch(error) {
+    console.log(error)
+  }
+}
   return (
-    <div className="p-1 flex flex-col justify-center gap-2">
+    <div className="p-1 flex flex-col gap-2 h-screen">
       {data.length > 0 ? (
         <>
       <p>Вот что вы заказали: </p>
@@ -53,7 +73,7 @@ const handleAddItem = (item) => {
         <span className="ml-1">На счет номера</span>
       </div>
 
-      <button className="bg-green-200 mt-2 mb-5 rounded-md h-7 w-1/4 self-center" disabled={!paymentType}>Заказать</button>
+      <button className="bg-green-200 mt-2 mb-5 rounded-md h-7 w-1/4 self-center" disabled={!paymentType} onClick={() => submitCart(data)}>Заказать</button>
       </>
       ) : (
         <p>В корзине пока пусто..</p>
