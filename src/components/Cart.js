@@ -23,7 +23,7 @@ const submitCart = async (orderList) => {
     departure: '08-05-2025'
   }
   try {
-    await fetch ('http://38.244.150.204:3000/send-order', {
+    await fetch ('https://yunobot.com:3000/send-order', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({ guestDetailsTEMPORARY, orderList })
